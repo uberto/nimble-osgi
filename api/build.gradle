@@ -1,0 +1,11 @@
+
+jar {
+    manifest {
+        version = '1.0.0'
+        name = 'Api Bundle'
+        instruction 'Bundle-Activator', 'com.gamasoft.osgi.api.Activator'
+        instruction 'Import-Package', '*'
+        instruction 'Export-Package', '*'
+        attributes('Built-By': gradle.gradleVersion)
+    }
+}

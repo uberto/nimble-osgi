@@ -1,0 +1,15 @@
+
+jar {
+    manifest {
+        version = '1.0.0'
+        name = 'Domain Bundle'
+        instruction 'Bundle-Activator', 'com.gamasoft.osgi.domain.Activator'
+        instruction 'Import-Package', '*'
+        instruction 'Export-Package', '*'
+        attributes('Built-By': gradle.gradleVersion)
+    }
+}
+
+dependencies{
+    compile project(':api')
+}

@@ -1,0 +1,17 @@
+jar {
+    manifest {
+        version = '1.0.0'
+        name = 'Frontend Bundle'
+        instruction 'Bundle-Activator', 'com.gamasoft.osgi.frontend.Activator'
+        instruction 'Import-Package', '*'
+        instruction 'Export-Package', '*'
+        instruction 'Web-ContextPath', '/acme'
+        attributes('Built-By': gradle.gradleVersion)
+    }
+}
+
+dependencies{
+    compile 'org.eclipse.jetty.aggregate:jetty-all:8.1.9.v20130131'
+    compile project(':api')
+
+}
