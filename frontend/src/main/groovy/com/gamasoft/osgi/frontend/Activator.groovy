@@ -1,6 +1,6 @@
 package com.gamasoft.osgi.frontend
 
-import com.gamasoft.osgi.api.interfaces.TalksService
+import com.gamasoft.osgi.interfaces.frontend.TalksService
 import com.gamasoft.osgi.frontend.servlets.RestServlet
 import com.gamasoft.osgi.frontend.tracker.ServiceProxy
 import org.osgi.framework.BundleActivator

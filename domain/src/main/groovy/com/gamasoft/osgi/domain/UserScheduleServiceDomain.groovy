@@ -1,17 +1,20 @@
 package com.gamasoft.osgi.domain
 
-import com.gamasoft.osgi.api.interfaces.UserScheduleService
-import com.gamasoft.osgi.api.values.UserSchedule
-
+import com.gamasoft.osgi.domain.values.UserSchedule
+import com.gamasoft.osgi.interfaces.frontend.LinkableResource
+import com.gamasoft.osgi.interfaces.frontend.UserScheduleService
 
 class UserScheduleServiceDomain implements UserScheduleService {
+
+    Random rand = new Random()
+
     @Override
-    def createUserPreferences(UserSchedule user) {
-        return null  //To change body of implemented methods use File | Settings | File Templates.
+    LinkableResource createUserPreferences(String userName, String email) {
+        return new UserSchedule(userName: userName, resourceName: userName + rand.nextInt(100), email: email)
     }
 
     @Override
-    UserSchedule getUserSchedule(String userId) {
-        return null  //To change body of implemented methods use File | Settings | File Templates.
+    LinkableResource getUserSchedule(String userId) {
+        return new UserSchedule(userName: "john", resourceName: userId, email: "john@google.com")
     }
 }

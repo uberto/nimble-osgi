@@ -1,8 +1,8 @@
 package com.gamasoft.osgi.domain
-import com.gamasoft.osgi.api.interfaces.SpeakersService
-import com.gamasoft.osgi.api.interfaces.TalksService
-import com.gamasoft.osgi.api.interfaces.UserScheduleService
-import com.gamasoft.osgi.api.persistence.PersistenceService
+import com.gamasoft.osgi.interfaces.frontend.SpeakersService
+import com.gamasoft.osgi.interfaces.frontend.TalksService
+import com.gamasoft.osgi.interfaces.frontend.UserScheduleService
+import com.gamasoft.osgi.interfaces.persistence.PersistenceService
 import org.osgi.framework.BundleActivator
 import org.osgi.framework.BundleContext
 import org.osgi.util.tracker.ServiceTracker

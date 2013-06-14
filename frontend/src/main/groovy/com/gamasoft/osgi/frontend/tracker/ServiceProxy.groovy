@@ -31,7 +31,7 @@ class ServiceProxy<T> {
         this
     }
 
-    def orElse(Closure closure) {
+    def orElse = { Closure closure ->
         T service = tracker.service as T
         if (service == null) {
             closure()

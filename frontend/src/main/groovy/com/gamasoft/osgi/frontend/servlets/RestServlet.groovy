@@ -1,7 +1,7 @@
 package com.gamasoft.osgi.frontend.servlets
-
-import com.gamasoft.osgi.api.interfaces.TalksService
 import com.gamasoft.osgi.frontend.tracker.ServiceProxy
+import com.gamasoft.osgi.interfaces.frontend.TalksService
+import groovy.json.JsonBuilder
 
 import javax.servlet.ServletException
 import javax.servlet.http.HttpServlet
@@ -23,27 +23,26 @@ class RestServlet extends HttpServlet {
 
         println " request ${req}"
 
-        resp.writer.write "Welcome to conference ${parts}"
+        resp.writer.write "Welcome to conference ${parts} \n\n\n"
 
 
         talksService.call {
 
             if (parts[2] == "talks") {
-                def talks = it.getTalks()
 
-                resp.writer.write "\n\n\n\n ${talks}"
+                printResourceInJson(resp.writer, it.getTalks())
+
+
             } else {
                 def talkId = parts[3]
 
-                def details = it.getTalkDetails(talkId)
-
-                resp.writer.write "\n\n\n\n ${details}"
+                printResourceInJson(resp.writer, it.getTalkDetails(talkId))
 
             }
 
         }.orElse {
 
-            resp.writer.write "The service is temporarily unavailable. Please try again later."
+            resp.sendError 500, "The service is temporarily unavailable. Please try again later."
         }
 
 //        /conferenceName/talks
@@ -54,5 +53,11 @@ class RestServlet extends HttpServlet {
 //        /conferenceName/schedule/yourName/talks
 
 
+    }
+
+    private void printResourceInJson(PrintWriter writer, Object resource) {
+        def JsonBuilder jsonBuilder = new JsonBuilder()
+        jsonBuilder(response: resource)
+        writer.write(jsonBuilder.toPrettyString() + "\n\n\n\n end")
     }
 }

@@ -1,7 +1,7 @@
 package com.gamasoft.osgi.domain
 
-import com.gamasoft.osgi.api.interfaces.SpeakersService
-import com.gamasoft.osgi.api.values.Speaker
+import com.gamasoft.osgi.interfaces.frontend.SpeakersService
+import com.gamasoft.osgi.domain.values.Speaker
 
 
 class SpeakersServiceDomain implements SpeakersService {
