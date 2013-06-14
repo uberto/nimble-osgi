@@ -32,6 +32,7 @@ public class Activator implements BundleActivator {
 
     public void stop(BundleContext context) {
         myTracker?.close()
+        println "Bye from Domain bundle activator ${this.class.name}"
     }
 
 

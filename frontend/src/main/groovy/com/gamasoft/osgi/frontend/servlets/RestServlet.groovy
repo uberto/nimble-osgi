@@ -1,4 +1,4 @@
-package com.gamasoft.osgi.frontend
+package com.gamasoft.osgi.frontend.servlets
 
 import com.gamasoft.osgi.api.interfaces.TalksService
 import com.gamasoft.osgi.frontend.tracker.ServiceProxy
@@ -25,11 +25,21 @@ class RestServlet extends HttpServlet {
 
         resp.writer.write "Welcome to conference ${parts}"
 
-        talksService.call { talksService ->
 
-            def talks = talksService.getTalks()
+        talksService.call {
 
-            resp.writer.write "\n\n\n\n ${talks}"
+            if (parts[2] == "talks") {
+                def talks = it.getTalks()
+
+                resp.writer.write "\n\n\n\n ${talks}"
+            } else {
+                def talkId = parts[3]
+
+                def details = it.getTalkDetails(talkId)
+
+                resp.writer.write "\n\n\n\n ${details}"
+
+            }
 
         }.orElse {
 

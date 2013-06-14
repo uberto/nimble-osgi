@@ -2,7 +2,7 @@
 jar {
     manifest {
         version = '1.0.0'
-        name = 'Api Bundle'
+        name = 'Frontend Interfaces Bundle'
         instruction 'Import-Package', '*'
         instruction 'Export-Package', '*'
         attributes('Built-By': gradle.gradleVersion)

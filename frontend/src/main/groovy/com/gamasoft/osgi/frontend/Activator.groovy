@@ -1,6 +1,7 @@
 package com.gamasoft.osgi.frontend
 
 import com.gamasoft.osgi.api.interfaces.TalksService
+import com.gamasoft.osgi.frontend.servlets.RestServlet
 import com.gamasoft.osgi.frontend.tracker.ServiceProxy
 import org.osgi.framework.BundleActivator
 import org.osgi.framework.BundleContext
@@ -19,15 +20,15 @@ public class Activator implements BundleActivator {
 
         talks.start(context)
 
-        registerNewServlet context
+        registerNewServlet context, new RestServlet(talks)
 
     }
 
-    def registerNewServlet(BundleContext context) {
+    def registerNewServlet(BundleContext context, RestServlet servlet) {
         ServiceReference sRef = context.getServiceReference(HttpService.class.name)
         if (sRef != null) {
             servletService = (HttpService) context.getService(sRef)
-            servletRegistration = servletService.registerServlet("/conference", new RestServlet(talks), null, null)
+            servletRegistration = servletService.registerServlet("/conference", servlet, null, null)
         }
     }
 

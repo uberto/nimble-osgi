@@ -10,6 +10,8 @@ public class Activator implements BundleActivator {
     }
 
     public void stop(BundleContext context) {
+        println "Bye from Backend bundle activator ${this.class.name}"
+
 
     }
 }
