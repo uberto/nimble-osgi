@@ -23,7 +23,7 @@
     <orderEntry type="library" exported="" name="groovy-all-2.0.5" level="project" />
     <orderEntry type="library" exported="" name="javax.servlet-3.0.0.v201112011016" level="project" />
     <orderEntry type="library" scope="TEST" name="junit-4.11" level="project" />
-    <orderEntry type="module" module-name="api" />
+    <orderEntry type="module" module-name="interfaces" exported="" />
   </component>
 </module>
 

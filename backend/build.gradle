@@ -5,7 +5,7 @@ jar {
         name = 'Backend Bundle'
         instruction 'Bundle-Activator', 'com.gamasoft.osgi.backend.Activator'
         instruction 'Import-Package', '*'
-        instruction 'Export-Package', '*'
+        instruction 'Export-Package', ''
         attributes('Built-By': gradle.gradleVersion)
     }
 }

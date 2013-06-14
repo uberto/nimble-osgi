@@ -1,2 +1,2 @@
-include "api", "backend", "domain", "frontend"
+include "interfaces", "backend", "domain", "frontend"
 

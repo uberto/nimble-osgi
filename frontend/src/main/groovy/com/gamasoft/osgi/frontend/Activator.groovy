@@ -1,22 +1,23 @@
 package com.gamasoft.osgi.frontend
 
 import com.gamasoft.osgi.api.interfaces.TalksService
+import com.gamasoft.osgi.frontend.tracker.ServiceProxy
 import org.osgi.framework.BundleActivator
 import org.osgi.framework.BundleContext
 import org.osgi.framework.ServiceReference
 import org.osgi.service.http.HttpService
-import org.osgi.util.tracker.ServiceTracker
 
 public class Activator implements BundleActivator {
 
-    def ServiceTracker tracker
+    def ServiceProxy<TalksService> talks = new ServiceProxy(TalksService)
     def servletRegistration
-    private HttpService servletService
+    def HttpService servletService
+
 
     public void start(BundleContext context) {
         println "Hello from Frontend bundle activator ${this.class.name}"
 
-        openTracker context, TalksService.class
+        talks.start(context)
 
         registerNewServlet context
 
@@ -26,22 +27,16 @@ public class Activator implements BundleActivator {
         ServiceReference sRef = context.getServiceReference(HttpService.class.name)
         if (sRef != null) {
             servletService = (HttpService) context.getService(sRef)
-            servletRegistration = servletService.registerServlet("/conference", new SimpleServlet(tracker), null, null)
+            servletRegistration = servletService.registerServlet("/conference", new RestServlet(talks), null, null)
         }
     }
 
-    def openTracker(BundleContext bundleContext, Class serviceClass) {
-
-        tracker = new ServiceTracker(bundleContext, serviceClass.getName(), null)
-
-        tracker.open()
-    }
 
     public void stop(BundleContext context) {
 
         servletService?.unregister("/conference")
 
-        tracker?.close()
+        talks.stop()
 
         println "Bye from Frontend bundle activator ${this.class.name}"
 

@@ -1,36 +1,40 @@
 package com.gamasoft.osgi.frontend
 
 import com.gamasoft.osgi.api.interfaces.TalksService
-import org.osgi.util.tracker.ServiceTracker
+import com.gamasoft.osgi.frontend.tracker.ServiceProxy
 
 import javax.servlet.ServletException
 import javax.servlet.http.HttpServlet
 import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
 
-class SimpleServlet extends HttpServlet {
+class RestServlet extends HttpServlet {
 
-    private final ServiceTracker tracker
+    private final ServiceProxy<TalksService> talksService
 
-    SimpleServlet(ServiceTracker tracker) {
-        this.tracker = tracker
+    RestServlet(ServiceProxy<TalksService> talksService) {
+        this.talksService = talksService
     }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        def parts = req.requestURL.toString().split('/')
+        def parts = req.requestURI.toString().split('/')
 
         println " request ${req}"
 
-        resp.writer.write "Welcome to conference ${parts[1]}"
+        resp.writer.write "Welcome to conference ${parts}"
 
-        TalksService talksService = tracker.service as TalksService
+        talksService.call { talksService ->
 
-        def talks = talksService.getTalks()
+            def talks = talksService.getTalks()
 
-        resp.writer.write "\n\n\n\n ${talks}"
+            resp.writer.write "\n\n\n\n ${talks}"
 
+        }.orElse {
+
+            resp.writer.write "The service is temporarily unavailable. Please try again later."
+        }
 
 //        /conferenceName/talks
 //        /conferenceName/talk/talkName
