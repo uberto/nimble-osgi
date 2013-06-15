@@ -11,10 +11,10 @@ class UserScheduleServiceDomain implements UserScheduleService {
 
     Random rand = new Random()
 
-    def emptySchedule = new UserSchedule(interestedTalkIds: [])
 
     @Override
     LinkableResource createUserPreferences(String userName, String email) {
+        def emptySchedule = new UserSchedule(interestedTalkIds: [])
         def user = new User(userName: userName, resourceName: userName + rand.nextInt(100), email: email, schedule: emptySchedule)
         users.put(user.resourceName, user)
         return user
@@ -27,7 +27,9 @@ class UserScheduleServiceDomain implements UserScheduleService {
 
     @Override
     LinkableResource addTalkToUserSchedule(String userId, String talkId) {
-        return null  //To change body of implemented methods use File | Settings | File Templates.
+        def user = users.get(userId)
+        user.schedule.interestedTalkIds.add(talkId)
+        return user
     }
 
     @Override

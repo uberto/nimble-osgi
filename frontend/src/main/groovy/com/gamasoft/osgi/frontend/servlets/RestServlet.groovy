@@ -41,6 +41,8 @@ class RestServlet extends HttpServlet {
 
             if (action == "talks") {
 
+                println "calling talks"
+
                 renderResource(it.getTalks(), resp)
 
             } else if (action == "talk") {
@@ -101,9 +103,13 @@ class RestServlet extends HttpServlet {
     }
 
     private void renderResource(resource, HttpServletResponse resp) {
+
+        println "resource got $resource"
+
         if (resource == null) {
             resp.sendError 404, "Resource not found!"
         } else {
+            resp.contentType = "application/json"
             printResourceInJson(resp.writer, resource)
         }
     }
@@ -113,5 +119,7 @@ class RestServlet extends HttpServlet {
     private void printResourceInJson(PrintWriter writer, Object resource) {
         def JsonBuilder jsonBuilder = new JsonBuilder()
         jsonBuilder(response: resource)
+        writer.write(jsonBuilder.toPrettyString())
+
     }
 }

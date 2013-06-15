@@ -29,11 +29,15 @@ class TalksServiceDomain implements TalksService {
         def t3 = new Talk(resourceName: "t3", title: "karaf saved our day", speaker: frank)
         def t4 = new Talk(resourceName: "t4", title: "tdd is forever", speaker: ste)
         def talks = [t1, t2, t3, t4]
+
+        println "sending $talks"
         talks
     }
 
     @Override
     Talk getTalkDetails(String talkId) {
-        return new Talk(resourceName: "t1", title:"osgi", speakerName: "uberto", talkAbstract: "bla bla bla")
+        def ste = new Speaker(resourceName: "stev", name: "Steve", surname: "Valeri", bio: "agile coach")
+
+        return new Talk(resourceName: "t4", title: "tdd is forever", speaker: ste)
     }
 }
