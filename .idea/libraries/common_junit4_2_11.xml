@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="common-junit4-2.11">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/artifacts-24/filestore/org.apache.maven.surefire/common-junit4/2.11/jar/c58b6be1a774bb1a3292fb69ab43c826515a13bf/common-junit4-2.11.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/artifacts-24/filestore/org.apache.maven.surefire/common-junit4/2.11/source/1a17943acb8a3d11234cae6fbcc5a52ea3407aa2/common-junit4-2.11-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

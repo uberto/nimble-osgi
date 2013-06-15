@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="commons-cli-1.0">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/artifacts-24/filestore/commons-cli/commons-cli/1.0/jar/6dac9733315224fc562f6268df58e92d65fd0137/commons-cli-1.0.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/artifacts-24/filestore/commons-cli/commons-cli/1.0/source/fc9b2f6fb941aadf5ea34f68c983b0e6bfbf2ca7/commons-cli-1.0-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

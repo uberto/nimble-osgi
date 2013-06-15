@@ -6,4 +6,8 @@ public interface UserScheduleService {
 
     def LinkableResource getUserSchedule(String userId)
 
+    def LinkableResource addTalkToUserSchedule(String userId, String talkId)
+
+    def LinkableResource removeTalkToUserSchedule(String userId, String talkId)
+
 }

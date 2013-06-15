@@ -1,4 +1,4 @@
-package com.gamasoft.osgi.domain.values
+package com.gamasoft.osgi.domain.users
 
 import groovy.transform.Canonical
 

@@ -1,8 +1,6 @@
-package com.gamasoft.osgi.domain
+package com.gamasoft.osgi.domain.talks
 
-import com.gamasoft.osgi.domain.values.Speaker
 import com.gamasoft.osgi.interfaces.frontend.TalksService
-import com.gamasoft.osgi.domain.values.Talk
 import org.osgi.util.tracker.ServiceTracker
 
 

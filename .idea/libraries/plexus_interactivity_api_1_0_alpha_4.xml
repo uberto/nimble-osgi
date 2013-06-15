@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="plexus-interactivity-api-1.0-alpha-4">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/artifacts-24/filestore/org.codehaus.plexus/plexus-interactivity-api/1.0-alpha-4/jar/a8f1178664a5457eef3f4531eb62f9505e1295f/plexus-interactivity-api-1.0-alpha-4.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/artifacts-24/filestore/org.codehaus.plexus/plexus-interactivity-api/1.0-alpha-4/source/b0870fe516231bd56766353bea9605a9617efa92/plexus-interactivity-api-1.0-alpha-4-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

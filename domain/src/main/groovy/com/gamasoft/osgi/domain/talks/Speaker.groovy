@@ -1,4 +1,4 @@
-package com.gamasoft.osgi.domain.values
+package com.gamasoft.osgi.domain.talks
 
 import com.gamasoft.osgi.interfaces.frontend.LinkableResource
 import groovy.transform.Canonical

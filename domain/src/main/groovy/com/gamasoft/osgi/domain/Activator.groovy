@@ -1,5 +1,7 @@
 package com.gamasoft.osgi.domain
 
+import com.gamasoft.osgi.domain.talks.TalksServiceDomain
+import com.gamasoft.osgi.domain.users.UserScheduleServiceDomain
 import com.gamasoft.osgi.interfaces.frontend.TalksService
 import com.gamasoft.osgi.interfaces.frontend.UserScheduleService
 import com.gamasoft.osgi.interfaces.persistence.PersistenceService

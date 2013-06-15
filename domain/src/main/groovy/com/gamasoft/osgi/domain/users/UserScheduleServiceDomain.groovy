@@ -1,7 +1,5 @@
-package com.gamasoft.osgi.domain
+package com.gamasoft.osgi.domain.users
 
-import com.gamasoft.osgi.domain.values.User
-import com.gamasoft.osgi.domain.values.UserSchedule
 import com.gamasoft.osgi.interfaces.frontend.LinkableResource
 import com.gamasoft.osgi.interfaces.frontend.UserScheduleService
 
@@ -25,5 +23,15 @@ class UserScheduleServiceDomain implements UserScheduleService {
     @Override
     LinkableResource getUserSchedule(String userId) {
         return users.get(userId)
+    }
+
+    @Override
+    LinkableResource addTalkToUserSchedule(String userId, String talkId) {
+        return null  //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    @Override
+    LinkableResource removeTalkToUserSchedule(String userId, String talkId) {
+        return null  //To change body of implemented methods use File | Settings | File Templates.
     }
 }

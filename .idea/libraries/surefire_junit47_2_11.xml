@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="surefire-junit47-2.11">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/artifacts-24/filestore/org.apache.maven.surefire/surefire-junit47/2.11/jar/b1a3bb7abe44da3250c99e81659aa7e01407ab07/surefire-junit47-2.11.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/artifacts-24/filestore/org.apache.maven.surefire/surefire-junit47/2.11/source/61d70a5830e39cde03b228e144fa4286a7689270/surefire-junit47-2.11-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
