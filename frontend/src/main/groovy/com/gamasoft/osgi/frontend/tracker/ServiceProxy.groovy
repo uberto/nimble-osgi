@@ -22,7 +22,7 @@ class ServiceProxy<T> {
         tracker?.close()
     }
 
-    def call(Closure<T> closure) {
+    def call(Closure closure) {
 
         T service = tracker.service as T
         if (service != null) {
