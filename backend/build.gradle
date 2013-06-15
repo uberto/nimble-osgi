@@ -9,3 +9,8 @@ jar {
         attributes('Built-By': gradle.gradleVersion)
     }
 }
+
+
+dependencies{
+    compile project(':interfaces')
+}

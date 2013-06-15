@@ -113,6 +113,5 @@ class RestServlet extends HttpServlet {
     private void printResourceInJson(PrintWriter writer, Object resource) {
         def JsonBuilder jsonBuilder = new JsonBuilder()
         jsonBuilder(response: resource)
-        writer.write(jsonBuilder.toPrettyString() + "\n\n\n\n end")
     }
 }

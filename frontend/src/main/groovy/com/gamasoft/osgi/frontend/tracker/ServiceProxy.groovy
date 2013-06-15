@@ -13,8 +13,10 @@ class ServiceProxy<T> {
     }
 
     def start(BundleContext context) {
-        def serviceRef = context.getServiceReference(serviceClass.getName())
-        tracker = new ServiceTracker(context, serviceRef, null)
+// Use reference if you want to track only specific version of service
+//        def serviceRef = context.getServiceReference(serviceClass.getName())
+
+        tracker = new ServiceTracker(context, serviceClass.getName(), null)
         tracker.open()
     }
 
