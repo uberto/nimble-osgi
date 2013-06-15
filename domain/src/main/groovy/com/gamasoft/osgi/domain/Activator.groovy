@@ -1,5 +1,5 @@
 package com.gamasoft.osgi.domain
-import com.gamasoft.osgi.interfaces.frontend.SpeakersService
+
 import com.gamasoft.osgi.interfaces.frontend.TalksService
 import com.gamasoft.osgi.interfaces.frontend.UserScheduleService
 import com.gamasoft.osgi.interfaces.persistence.PersistenceService
@@ -7,16 +7,12 @@ import org.osgi.framework.BundleActivator
 import org.osgi.framework.BundleContext
 import org.osgi.util.tracker.ServiceTracker
 
-
 public class Activator implements BundleActivator {
 
     private ServiceTracker myTracker
 
     public void start(BundleContext context) {
         println "Hello from Domain bundle activator ${this.class.name}"
-
-        context.registerService(SpeakersService.class.getName(),
-                new SpeakersServiceDomain(), null);
 
         context.registerService(UserScheduleService.class.getName(),
                 new UserScheduleServiceDomain(), null);

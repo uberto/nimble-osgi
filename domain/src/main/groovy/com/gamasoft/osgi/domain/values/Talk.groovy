@@ -8,8 +8,7 @@ import groovy.transform.Canonical
 class Talk implements LinkableResource {
     String resourceName
     String title
-    String speakerName
-    String speakerId
+    Speaker speaker
     String talkAbstract
     int durationInMin
 }

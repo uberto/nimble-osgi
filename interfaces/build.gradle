@@ -3,8 +3,8 @@ jar {
     manifest {
         version = '1.0.0'
         name = 'Frontend Interfaces Bundle'
-        instruction 'Import-Package', '*'
-        instruction 'Export-Package', '*'
+        instruction 'Import-Package', '!com.gamasoft.osgi.*, *'
+        instruction 'Export-Package', 'com.gamasoft.osgi.interfaces.*'
         attributes('Built-By': gradle.gradleVersion)
     }
 }
