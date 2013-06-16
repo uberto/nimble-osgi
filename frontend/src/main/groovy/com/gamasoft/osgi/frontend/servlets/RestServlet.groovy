@@ -1,6 +1,7 @@
 package com.gamasoft.osgi.frontend.servlets
 
 import com.gamasoft.osgi.frontend.tracker.ServiceProxy
+import com.gamasoft.osgi.interfaces.frontend.LinkableResource
 import com.gamasoft.osgi.interfaces.frontend.TalksService
 import com.gamasoft.osgi.interfaces.frontend.UserScheduleService
 import groovy.json.JsonBuilder
@@ -65,20 +66,31 @@ class RestServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
+        servingUserScheduleRequest(req, resp, { service, parts ->
+
+            service.createUserPreferences(req.getParameter("userName"), req.getParameter("email"))
+
+            resp.sendError(201, "User preferences successfully created!")
+
+        })
+
+    }
+
+    private void servingUserScheduleRequest(HttpServletRequest req, HttpServletResponse resp, Closure closure) {
         def uri = req.requestURI
+
+        log "serving ${req.method} request ${uri}"
+
+
         def parts = uri.toString().split('/')
-
-        log "serving POST request ${uri}"
-
         def action = parts[2]
 
         userScheduleService.call {
 
             if (action == "schedule") {
 
-                it.createUserPreferences(req.getParameter("userName"), req.getParameter("email"))
-
-                resp.sendError(201, "User preferences successfully created!")
+                closure(it, parts)
 
             } else {
                 resp.sendError(404, "Uri not valid!")
@@ -89,21 +101,40 @@ class RestServlet extends HttpServlet {
             resp.sendError 500, "The service is temporarily unavailable. Please try again later."
         }
 
-        log "ending serving POST request ${uri}"
+        log "end serving ${req.method} request ${uri}"
+
     }
 
     @Override
     protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        super.doPut(req, resp)    //TODO change user email
+
+        servingUserScheduleRequest(req, resp, { service, parts ->
+
+            LinkableResource user = service.addTalkToUserSchedule(parts[3], parts[4])
+
+            if (user == null)
+                resp.sendError(404, "Resource not available")
+            else
+                resp.sendError(204, "User preference successfully updated!")
+
+        })
     }
 
     @Override
     protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        super.doDelete(req, resp)    //TODO delete user
+        servingUserScheduleRequest(req, resp, { service, parts ->
+
+            LinkableResource user = service.removeTalkToUserSchedule(parts[3], parts[4])
+            if (user == null)
+                resp.sendError(404, "Resource not available")
+            else
+                resp.sendError(204, "User preference successfully deleted!")
+
+        })
     }
 
     private void renderResource(resource, HttpServletResponse resp) {
-
+        //TODO render according to request content-type
         println "resource got $resource"
 
         if (resource == null) {

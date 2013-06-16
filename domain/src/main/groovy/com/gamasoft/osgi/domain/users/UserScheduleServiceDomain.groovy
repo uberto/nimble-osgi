@@ -28,12 +28,19 @@ class UserScheduleServiceDomain implements UserScheduleService {
     @Override
     LinkableResource addTalkToUserSchedule(String userId, String talkId) {
         def user = users.get(userId)
+        if (user == null)
+            return null
+        //TODO check if the talkId actually exist
         user.schedule.interestedTalkIds.add(talkId)
         return user
     }
 
     @Override
     LinkableResource removeTalkToUserSchedule(String userId, String talkId) {
-        return null  //To change body of implemented methods use File | Settings | File Templates.
+        def user = users.get(userId)
+        if (user == null)
+            return null
+        user.schedule.interestedTalkIds.remove(talkId)
+        return user
     }
 }

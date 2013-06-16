@@ -18,6 +18,8 @@ class TalksServiceDomain implements TalksService {
     }
 
     private ArrayList<Talk> retrieveTalks() {
+
+       //TODO get from shared map
         def andy = new Speaker(resourceName: "andys", name: "Andy", surname: "Smith", bio: "programmer")
         def frank = new Speaker(resourceName: "frankb", name: "Frank", surname: "Beniek", bio: "scrum master")
         def jon = new Speaker(resourceName: "jonc", name: "Jon", surname: "Cooper", bio: "team leader")
@@ -31,6 +33,7 @@ class TalksServiceDomain implements TalksService {
         def talks = [t1, t2, t3, t4]
 
         println "sending $talks"
+
         talks
     }
 

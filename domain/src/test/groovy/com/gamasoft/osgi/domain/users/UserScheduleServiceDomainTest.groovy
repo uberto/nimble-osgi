@@ -99,11 +99,17 @@ class UserScheduleServiceDomainTest extends Specification {
 
     }
 
-    void testAddTalkToUserSchedule() {
+    def "remove talks to user pref"() {
+        given:
+        def adamId = (service.createUserPreferences("adam", "adam@gmail.com") as User).resourceName
+        service.addTalkToUserSchedule(adamId, "talk1")
+        service.addTalkToUserSchedule(adamId, "talk2")
+        service.removeTalkToUserSchedule(adamId, "talk1")
+
+        expect:
+        User adam = service.getUserSchedule(adamId) as User
+        adam.schedule == new UserSchedule(["talk2"])
 
     }
 
-    void testRemoveTalkToUserSchedule() {
-
     }
-}
