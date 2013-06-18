@@ -1,25 +1,29 @@
 package com.gamasoft.osgi.domain.talks
 
 import com.gamasoft.osgi.interfaces.frontend.TalksService
-import org.osgi.util.tracker.ServiceTracker
-
+import org.osgi.util.tracker.ServiceTrackerCustomizer
 
 class TalksServiceDomain implements TalksService {
-    private ServiceTracker tracker
 
-    TalksServiceDomain(ServiceTracker tracker) {
+    private ServiceTrackerCustomizer tracker
+    private Map<String, Talk> talks
+
+    TalksServiceDomain(ServiceTrackerCustomizer tracker) {
         this.tracker = tracker
+        this.talks = createTalks()
     }
+
+
 
     @Override
     List<Talk> getTalks() {
-        ArrayList<Talk> talks = retrieveTalks()
-        return talks
+        println "sending $talks"
+
+        new ArrayList<>(talks.values())
     }
 
-    private ArrayList<Talk> retrieveTalks() {
+    private static Map<String, Talk> createTalks() {
 
-       //TODO get from shared map
         def andy = new Speaker(resourceName: "andys", name: "Andy", surname: "Smith", bio: "programmer")
         def frank = new Speaker(resourceName: "frankb", name: "Frank", surname: "Beniek", bio: "scrum master")
         def jon = new Speaker(resourceName: "jonc", name: "Jon", surname: "Cooper", bio: "team leader")
@@ -30,17 +34,14 @@ class TalksServiceDomain implements TalksService {
         def t2 = new Talk(resourceName: "t2", title: "groovy rulez", speaker: andy)
         def t3 = new Talk(resourceName: "t3", title: "karaf saved our day", speaker: frank)
         def t4 = new Talk(resourceName: "t4", title: "tdd is forever", speaker: ste)
-        def talks = [t1, t2, t3, t4]
-
-        println "sending $talks"
+        def talks = [osgi: t1, groovy: t2, karaf: t3, tdd: t4]
 
         talks
     }
 
     @Override
     Talk getTalkDetails(String talkId) {
-        def ste = new Speaker(resourceName: "stev", name: "Steve", surname: "Valeri", bio: "agile coach")
 
-        return new Talk(resourceName: "t4", title: "tdd is forever", speaker: ste)
+        talks[talkId]
     }
 }

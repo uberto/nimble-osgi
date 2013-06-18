@@ -4,25 +4,6 @@ import com.gamasoft.osgi.interfaces.frontend.UserScheduleService
 import spock.lang.Specification
 
 class UserScheduleServiceDomainTest extends Specification {
-//
-//    def "length of Spock's and his friends' names"() {
-//        expect:
-//        name.size() == length
-//
-//        where:
-//        name     | length
-//        "Spock"  | 5
-//        "Kirk"   | 4
-//        "Scotty" | 6
-//    }
-//
-//    def "maximum of two numbers"() {
-//        expect:
-//        Math.max(a, b) == c
-//
-//        where:
-//        [a, b, c] << sql.rows("select a, b, c from maxdata")
-//    }
 
     def UserScheduleService service
 
