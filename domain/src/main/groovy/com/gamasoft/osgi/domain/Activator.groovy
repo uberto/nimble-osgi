@@ -8,10 +8,11 @@ import com.gamasoft.osgi.interfaces.persistence.PersistenceService
 import org.osgi.framework.BundleActivator
 import org.osgi.framework.BundleContext
 import org.osgi.util.tracker.ServiceTracker
+import org.osgi.util.tracker.ServiceTrackerCustomizer
 
 public class Activator implements BundleActivator {
 
-    private ServiceTracker myTracker
+    private ServiceTrackerCustomizer myTracker
 
     public void start(BundleContext context) {
         println "Hello from Domain bundle activator ${this.class.name}"
@@ -19,7 +20,7 @@ public class Activator implements BundleActivator {
         context.registerService(UserScheduleService.class.getName(),
                 new UserScheduleServiceDomain(), null);
 
-        myTracker = createTracker context, PersistenceService.class
+        myTracker = new ServiceTracker(context, PersistenceService.class.getName(), null)
 
         context.registerService TalksService.class.getName(),
                 new TalksServiceDomain(myTracker), null;
@@ -34,9 +35,4 @@ public class Activator implements BundleActivator {
     }
 
 
-    def createTracker(BundleContext bundleContext, Class serviceClass) {
-
-        return new ServiceTracker(bundleContext, serviceClass.getName(), null)
-
-    }
 }
