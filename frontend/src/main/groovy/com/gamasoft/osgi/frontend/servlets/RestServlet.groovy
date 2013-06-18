@@ -69,9 +69,12 @@ class RestServlet extends HttpServlet {
 
         servingUserScheduleRequest(req, resp, { service, parts ->
 
-            service.createUserPreferences(req.getParameter("userName"), req.getParameter("email"))
+            def LinkableResource user = service.createUserPreferences(req.getParameter("userName"), req.getParameter("email"))
 
-            resp.sendError(201, "User preferences successfully created!")
+            println "created user $user"
+
+            resp.sendRedirect("schedule/${user.resourceName}/talks");
+            resp.setStatus(201)
 
         })
 
@@ -114,9 +117,10 @@ class RestServlet extends HttpServlet {
 
             if (user == null)
                 resp.sendError(404, "Resource not available")
-            else
-                resp.sendError(204, "User preference successfully updated!")
-
+            else {
+                resp.setStatus 204
+                resp.writer.write "User preference successfully updated!"
+            }
         })
     }
 
@@ -127,9 +131,11 @@ class RestServlet extends HttpServlet {
             LinkableResource user = service.removeTalkToUserSchedule(parts[3], parts[4])
             if (user == null)
                 resp.sendError(404, "Resource not available")
-            else
-                resp.sendError(204, "User preference successfully deleted!")
+            else {
+                resp.setStatus 204
+                resp.writer.write "User preference successfully deleted!"
 
+            }
         })
     }
 
