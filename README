@@ -15,7 +15,6 @@ bin/karaf
 
 
 
-
 Install http support (pax-web)
 
 feature:install http
