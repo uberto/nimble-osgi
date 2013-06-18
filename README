@@ -1,2 +1,62 @@
+Setup instructions
+
+
+Download and configure Maven 3.x
+
+Download and configure your ide for Groovy 2.x (tested with 2.1.4)
+http://groovy.codehaus.org/Download
+
+
+Download karaf 3.0.0-RC1
+http://karaf.apache.org/index/community/download.html
+
+launch it:
+bin/karaf
+
+
+
+
+Install http support (pax-web)
+
+feature:install http
+
+to start and configure jetty (just once)
+config:property-set -p org.ops4j.pax.web org.osgi.service.http.port 8080
+
+(check on localhost:8080)
+
+
+install -s mvn:org.codehaus.groovy/groovy-all
+
+Download (or clone) example code from github
+https://github.com/uberto/nimble-osgi
+
+
+to compile from command line (in the main dir)
+./gradlew build install
+
+
+from karaf console
+install -s mvn:com.gama-soft.osgi/frontend/1.0.0-SNAPSHOT
+install -s mvn:com.gama-soft.osgi/backend/1.0.0-SNAPSHOT
+install -s mvn:com.gama-soft.osgi/domain/1.0.0-SNAPSHOT
+install -s mvn:com.gama-soft.osgi/interfaces/1.0.0-SNAPSHOT
+
+(check on localhost:8080/conference)
+
+
+
+to autoupdate bundles
+bundle:watch <bundleId> <bundleId>
+(dev:watch in karaf 2.x)
+
+
+to compile and install only a module (from the module dir)
+../gradlew install
+
+
+
+
+
 
 
