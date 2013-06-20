@@ -18,6 +18,7 @@ class RestServlet extends HttpServlet {
 //        /conferenceName/schedule/yourName      <= POST/PUT/DELETE
 //        /conferenceName/schedule/yourName/talks
 
+
     private final ServiceProxy<TalksService> talksService
     private ServiceProxy<UserScheduleService> userScheduleService
 
@@ -36,31 +37,42 @@ class RestServlet extends HttpServlet {
 
         def action = parts[2]
 
-        //TODO get user schedule
 
-        talksService.call {
+        if (action == "schedule") {
 
-            if (action == "talks") {
+            userScheduleService.call {
+                println "calling userSchedule"
 
-                println "calling talks"
+                renderResource(it.getUserSchedule(parts[3]), resp)
+            }.orElse {
 
-                renderResource(it.getTalks(), resp)
-
-            } else if (action == "talk") {
-
-                def talkId = parts[3]
-
-                renderResource(it.getTalkDetails(talkId), resp)
-
-            } else {
-                resp.sendError(404, "Uri not valid!")
+                resp.sendError 500, "The service is temporarily unavailable. Please try again later."
             }
 
-        }.orElse {
+        } else {
+            talksService.call {
 
-            resp.sendError 500, "The service is temporarily unavailable. Please try again later."
+                if (action == "talks") {
+
+                    println "calling talks"
+
+                    renderResource(it.getTalks(), resp)
+
+                } else if (action == "talk") {
+
+                    def talkId = parts[3]
+
+                    renderResource(it.getTalkDetails(talkId), resp)
+
+                } else {
+                    resp.sendError(404, "Uri not valid!")
+                }
+
+            }.orElse {
+
+                resp.sendError 500, "The service is temporarily unavailable. Please try again later."
+            }
         }
-
         log "ending serving GET request ${uri}"
     }
 
@@ -73,7 +85,7 @@ class RestServlet extends HttpServlet {
 
             println "created user $user"
 
-            resp.sendRedirect("schedule/${user.resourceName}/talks");
+            resp.sendRedirect("${user.resourceName}/talks");
             resp.setStatus(201)
 
         })

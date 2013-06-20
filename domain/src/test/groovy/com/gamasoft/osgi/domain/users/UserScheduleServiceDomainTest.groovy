@@ -19,7 +19,7 @@ class UserScheduleServiceDomainTest extends Specification {
         expect:
         user.userName == name
         user.email == email
-        user.schedule == new UserSchedule([])
+        user.schedule == new UserSchedule()
         user.resourceName.startsWith(name)
 
         where:
@@ -40,7 +40,7 @@ class UserScheduleServiceDomainTest extends Specification {
         User retrieved = service.getUserSchedule(userId) as User
         retrieved.userName == name
         retrieved.email == email
-        retrieved.schedule == new UserSchedule([])
+        retrieved.schedule == new UserSchedule()
         retrieved.resourceName.startsWith(name)
 
         where:
@@ -75,8 +75,21 @@ class UserScheduleServiceDomainTest extends Specification {
         expect:
         User adam = service.getUserSchedule(adamId) as User
         User eve = service.getUserSchedule(eveId) as User
-        adam.schedule == new UserSchedule(["talk1", "talk2"])
+        adam.schedule == new UserSchedule(["talk1", "talk2"] as SortedSet)
         eve.schedule.interestedTalkIds.size() == 0
+
+    }
+
+
+    def "add twice the same talk to user pref do not duplicate"() {
+        given:
+        def adamId = (service.createUserPreferences("adam", "adam@gmail.com") as User).resourceName
+        service.addTalkToUserSchedule(adamId, "talk1")
+        service.addTalkToUserSchedule(adamId, "talk1")
+
+        expect:
+        User adam = service.getUserSchedule(adamId) as User
+        adam.schedule == new UserSchedule(["talk1"] as SortedSet)
 
     }
 
@@ -89,7 +102,7 @@ class UserScheduleServiceDomainTest extends Specification {
 
         expect:
         User adam = service.getUserSchedule(adamId) as User
-        adam.schedule == new UserSchedule(["talk2"])
+        adam.schedule == new UserSchedule(["talk2"] as SortedSet)
 
     }
 

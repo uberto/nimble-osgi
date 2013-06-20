@@ -6,7 +6,7 @@ import groovy.transform.Canonical
 
 import java.text.SimpleDateFormat
 
-class MyTest extends GroovyTestCase {
+class JsonTest extends GroovyTestCase {
 
     def jsonBuilder = new JsonBuilder()
 

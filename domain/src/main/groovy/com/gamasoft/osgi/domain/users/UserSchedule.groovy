@@ -5,6 +5,6 @@ import groovy.transform.Canonical
 @Canonical
 class UserSchedule {
     
-    List<String> interestedTalkIds
+    SortedSet<String> interestedTalkIds = [] as SortedSet
 
 }

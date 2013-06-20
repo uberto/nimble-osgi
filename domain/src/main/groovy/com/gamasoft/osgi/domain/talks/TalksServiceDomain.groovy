@@ -30,10 +30,10 @@ class TalksServiceDomain implements TalksService {
         def ste = new Speaker(resourceName: "stev", name: "Steve", surname: "Valeri", bio: "agile coach")
 
 
-        def t1 = new Talk(resourceName: "t1", title: "osgi is the best", speaker: jon)
-        def t2 = new Talk(resourceName: "t2", title: "groovy rulez", speaker: andy)
-        def t3 = new Talk(resourceName: "t3", title: "karaf saved our day", speaker: frank)
-        def t4 = new Talk(resourceName: "t4", title: "tdd is forever", speaker: ste)
+        def t1 = new Talk(resourceName: "osgi", title: "osgi is the best", speaker: jon)
+        def t2 = new Talk(resourceName: "groovy", title: "groovy rulez!!!", speaker: andy)
+        def t3 = new Talk(resourceName: "karaf", title: "karaf saved our day", speaker: frank)
+        def t4 = new Talk(resourceName: "tdd", title: "tdd is forever", speaker: ste)
         def talks = [osgi: t1, groovy: t2, karaf: t3, tdd: t4]
 
         talks

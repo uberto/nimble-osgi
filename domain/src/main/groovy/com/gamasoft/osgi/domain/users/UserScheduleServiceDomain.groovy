@@ -14,7 +14,7 @@ class UserScheduleServiceDomain implements UserScheduleService {
 
     @Override
     LinkableResource createUserPreferences(String userName, String email) {
-        def emptySchedule = new UserSchedule(interestedTalkIds: [])
+        def emptySchedule = new UserSchedule(interestedTalkIds: [] as SortedSet)
         def user = new User(userName: userName, resourceName: userName + rand.nextInt(100), email: email, schedule: emptySchedule)
         users.put(user.resourceName, user)
         return user
