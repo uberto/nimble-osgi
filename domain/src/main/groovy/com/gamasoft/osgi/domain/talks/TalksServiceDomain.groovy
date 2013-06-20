@@ -1,16 +1,21 @@
 package com.gamasoft.osgi.domain.talks
 
+import com.gamasoft.osgi.domain.users.DecoratedUserFactory
+import com.gamasoft.osgi.domain.users.User
+import com.gamasoft.osgi.interfaces.frontend.LinkableResource
 import com.gamasoft.osgi.interfaces.frontend.TalksService
 import org.osgi.util.tracker.ServiceTrackerCustomizer
 
 class TalksServiceDomain implements TalksService {
 
-    private ServiceTrackerCustomizer tracker
-    private Map<String, Talk> talks
+    def ServiceTrackerCustomizer tracker
+    def Map<String, Talk> talks
+    def DecoratedUserFactory decoratedUserFactory
 
     TalksServiceDomain(ServiceTrackerCustomizer tracker) {
         this.tracker = tracker
         this.talks = createTalks()
+        this.decoratedUserFactory = new DecoratedUserFactory(talks)
     }
 
 
@@ -43,5 +48,10 @@ class TalksServiceDomain implements TalksService {
     Talk getTalkDetails(String talkId) {
 
         talks[talkId]
+    }
+
+    @Override
+    LinkableResource getUserSchedule(LinkableResource user) {
+        return decoratedUserFactory.create(user as User)
     }
 }

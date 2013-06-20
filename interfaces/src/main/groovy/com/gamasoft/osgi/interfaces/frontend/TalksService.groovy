@@ -4,4 +4,7 @@ public interface TalksService {
     def List<LinkableResource> getTalks()
 
     def LinkableResource getTalkDetails(String talkId)
+
+    def LinkableResource getUserSchedule(LinkableResource user)
+
 }

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DynamicElementsStorage">
+    <option name="containingClasses">
+      <map>
+        <entry key="com.gamasoft.osgi.interfaces.frontend.LinkableResource">
+          <value>
+            <DClassElement>
+              <option name="name" value="com.gamasoft.osgi.interfaces.frontend.LinkableResource" />
+              <option name="myName" value="com.gamasoft.osgi.interfaces.frontend.LinkableResource" />
+              <option name="myProperties">
+                <set>
+                  <DPropertyElement>
+                    <option name="name" value="userName" />
+                    <option name="static" value="false" />
+                    <option name="type" value="java.lang.String" />
+                    <option name="myType" value="java.lang.String" />
+                    <option name="myStatic" value="false" />
+                    <option name="myName" value="userName" />
+                  </DPropertyElement>
+                </set>
+              </option>
+            </DClassElement>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+</project>
+
