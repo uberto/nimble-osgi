@@ -43,7 +43,16 @@ class RestServlet extends HttpServlet {
             userScheduleService.call {
                 println "calling userSchedule"
 
-                renderResource(it.getUserSchedule(parts[3]), resp)
+                def user = it.getUserSchedule(parts[3])
+
+                talksService.call {
+                    renderResource(it.getUserSchedule(user), resp)
+                }
+                    .orElse {
+
+                        resp.sendError 500, "The service is temporarily unavailable. Please try again later."
+                    }
+
             }.orElse {
 
                 resp.sendError 500, "The service is temporarily unavailable. Please try again later."
