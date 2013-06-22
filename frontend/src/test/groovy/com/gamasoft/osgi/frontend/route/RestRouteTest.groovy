@@ -34,7 +34,7 @@ class RestRouteTest extends Specification {
 
     def "match URIs to getItem route"() {
         expect:
-        getItem.match(method, uri) == [matching,  params]
+        getItem.match(method, uri) == [matching, params]
 
         where:
         method |  uri  | matching | params

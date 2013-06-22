@@ -1,5 +1,5 @@
 package com.gamasoft.osgi.frontend.servlets
-
+import com.gamasoft.osgi.frontend.route.RestRoutes
 import com.gamasoft.osgi.frontend.tracker.ServiceProxy
 import com.gamasoft.osgi.interfaces.frontend.LinkableResource
 import com.gamasoft.osgi.interfaces.frontend.TalksService
@@ -11,6 +11,8 @@ import javax.servlet.http.HttpServlet
 import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
 
+import static com.gamasoft.osgi.frontend.route.RestMethod.*
+
 class RestServlet extends HttpServlet {
 
 //        /conferenceName/talks
@@ -18,123 +20,91 @@ class RestServlet extends HttpServlet {
 //        /conferenceName/schedule/yourName      <= POST/PUT/DELETE
 //        /conferenceName/schedule/yourName/talks
 
-
+//
     private final ServiceProxy<TalksService> talksService
-    private ServiceProxy<UserScheduleService> userScheduleService
+    private final ServiceProxy<UserScheduleService> userScheduleService
+    private final RestRoutes routes = new RestRoutes()
 
     RestServlet(ServiceProxy<TalksService> talksService, ServiceProxy<UserScheduleService> userScheduleService) {
         this.userScheduleService = userScheduleService
         this.talksService = talksService
+
+
+        routes << [GET, '/conference/talks', this.&getTalks]
+        routes << [GET, '/conference/talk/$talkId', this.&getTalk]
+        routes << [GET, '/conference/schedule/$userId/talks', this.&getSchedule]
+        routes << [POST, '/conference/schedule', this.&createUser]
+        routes << [PUT, '/conference/schedule/$userId/$talkId', this.&addTalkToUserSchedule]
+        routes << [DELETE, '/conference/schedule/$userId/$talkId', this.&removeTalkToUserSchedule]
+
     }
 
+
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        def uri = req.requestURI
-        def parts = uri.toString().split('/')
+        routes.dispatch(req, resp)
 
-        log "serving GET request ${uri}"
+    }
 
-        def action = parts[2]
+    private void noService(resp) {
+        resp.sendError 500, "The service is temporarily unavailable. Please try again later."
+    }
 
+    def getTalks(resp, params) {
 
-        if (action == "schedule") {
+        talksService.call {
+            println "calling talks"
 
-            userScheduleService.call {
-                println "calling userSchedule"
+            renderResource(it.getTalks(), resp)
+        }.orElse { noService(resp) }
 
-                def user = it.getUserSchedule(parts[3])
+    }
 
-                talksService.call {
-                    renderResource(it.getUserSchedule(user), resp)
-                }
-                    .orElse {
+    def getTalk(resp, params) {
 
-                        resp.sendError 500, "The service is temporarily unavailable. Please try again later."
-                    }
+        talksService.call {
+            println "calling talk"
 
-            }.orElse {
+            renderResource(it.getTalkDetails(params['talkId']), resp)
+        }.orElse { noService(resp) }
 
-                resp.sendError 500, "The service is temporarily unavailable. Please try again later."
-            }
+    }
 
-        } else {
+    def getSchedule(resp, params) {
+
+        userScheduleService.call {
+            println "calling userSchedule"
+
+            def user = it.getUserSchedule(params['userId'])
+
             talksService.call {
+                renderResource(it.getUserSchedule(user), resp)
+            }.orElse { noService(resp) }
+        }.orElse { noService(resp) }
 
-                if (action == "talks") {
-
-                    println "calling talks"
-
-                    renderResource(it.getTalks(), resp)
-
-                } else if (action == "talk") {
-
-                    def talkId = parts[3]
-
-                    renderResource(it.getTalkDetails(talkId), resp)
-
-                } else {
-                    resp.sendError(404, "Uri not valid!")
-                }
-
-            }.orElse {
-
-                resp.sendError 500, "The service is temporarily unavailable. Please try again later."
-            }
-        }
-        log "ending serving GET request ${uri}"
     }
 
-    @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    def createUser(resp, params) {
 
-        servingUserScheduleRequest(req, resp, { service, parts ->
+        userScheduleService.call {
+            println "calling userSchedule"
 
-            def LinkableResource user = service.createUserPreferences(req.getParameter("userName"), req.getParameter("email"))
+            def user = it.createUserPreferences(params['userName'][0], params['email'][0])
 
             println "created user $user"
 
             resp.sendRedirect("${user.resourceName}/talks");
             resp.setStatus(201)
 
-        })
+        }.orElse { noService(resp) }
 
     }
 
-    private void servingUserScheduleRequest(HttpServletRequest req, HttpServletResponse resp, Closure closure) {
-        def uri = req.requestURI
-
-        log "serving ${req.method} request ${uri}"
-
-
-        def parts = uri.toString().split('/')
-        def action = parts[2]
+    def addTalkToUserSchedule(resp, params) {
 
         userScheduleService.call {
-
-            if (action == "schedule") {
-
-                closure(it, parts)
-
-            } else {
-                resp.sendError(404, "Uri not valid!")
-            }
-
-        }.orElse {
-
-            resp.sendError 500, "The service is temporarily unavailable. Please try again later."
-        }
-
-        log "end serving ${req.method} request ${uri}"
-
-    }
-
-    @Override
-    protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
-        servingUserScheduleRequest(req, resp, { service, parts ->
-
-            LinkableResource user = service.addTalkToUserSchedule(parts[3], parts[4])
+            LinkableResource user = it.addTalkToUserSchedule(params['userId'], params['talkId'])
 
             if (user == null)
                 resp.sendError(404, "Resource not available")
@@ -142,23 +112,27 @@ class RestServlet extends HttpServlet {
                 resp.setStatus 204
                 resp.writer.write "User preference successfully updated!"
             }
-        })
+
+        }.orElse { noService(resp) }
+
     }
 
-    @Override
-    protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        servingUserScheduleRequest(req, resp, { service, parts ->
+    def removeTalkToUserSchedule(resp, params) {
 
-            LinkableResource user = service.removeTalkToUserSchedule(parts[3], parts[4])
+        userScheduleService.call {
+            LinkableResource user = it.removeTalkToUserSchedule(params['userId'], params['talkId'])
+
             if (user == null)
                 resp.sendError(404, "Resource not available")
             else {
                 resp.setStatus 204
-                resp.writer.write "User preference successfully deleted!"
-
+                resp.writer.write "User preference successfully updated!"
             }
-        })
+
+        }.orElse { noService(resp) }
+
     }
+
 
     private void renderResource(resource, HttpServletResponse resp) {
         //TODO render according to request content-type
@@ -180,4 +154,6 @@ class RestServlet extends HttpServlet {
         writer.write(jsonBuilder.toPrettyString())
 
     }
+
+
 }

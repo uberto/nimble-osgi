@@ -1,5 +1,7 @@
 package com.gamasoft.osgi.frontend.route
 
+import javax.servlet.http.HttpServletResponse
+
 class RestRoute {
     RestMethod method
     String uri
@@ -21,14 +23,19 @@ class RestRoute {
         if (method != this.method.name())
             return noneMatch;
 
-        def vars = [:]
+        def params = [:]
         for (int i = 0; i < parts.length; i++) {
             def routePart = routParts[i]
             if (routePart.startsWith('$'))
-                vars.put(routePart.substring(1), parts[i])
+                params.put(routePart.substring(1), parts[i])
             else if (parts[i] != routePart)
                 return noneMatch
         }
-        return [true, vars]
+        return [true, params]
+    }
+
+    def process(Map<String, String> params, HttpServletResponse httpServletResponse) {
+        call(httpServletResponse, params)
+
     }
 }
