@@ -30,12 +30,12 @@ class RestServlet extends HttpServlet {
         this.talksService = talksService
 
 
-        routes << [GET, '/conference/talks', this.&getTalks]
-        routes << [GET, '/conference/talk/$talkId', this.&getTalk]
-        routes << [GET, '/conference/schedule/$userId/talks', this.&getSchedule]
-        routes << [POST, '/conference/schedule', this.&createUser]
-        routes << [PUT, '/conference/schedule/$userId/$talkId', this.&addTalkToUserSchedule]
-        routes << [DELETE, '/conference/schedule/$userId/$talkId', this.&removeTalkToUserSchedule]
+        routes << [GET, '/conference/talks', getTalks]
+        routes << [GET, '/conference/talk/$talkId', getTalk]
+        routes << [GET, '/conference/schedule/$userId/talks', getSchedule]
+        routes << [POST, '/conference/schedule', createUser]
+        routes << [PUT, '/conference/schedule/$userId/$talkId', addTalkToUserSchedule]
+        routes << [DELETE, '/conference/schedule/$userId/$talkId', removeTalkToUserSchedule]
 
     }
 
@@ -51,7 +51,7 @@ class RestServlet extends HttpServlet {
         resp.sendError 500, "The service is temporarily unavailable. Please try again later."
     }
 
-    def getTalks(resp, params) {
+    def getTalks = { resp, params ->
 
         talksService.call {
             println "calling talks"
@@ -61,7 +61,7 @@ class RestServlet extends HttpServlet {
 
     }
 
-    def getTalk(resp, params) {
+    def getTalk = { resp, params ->
 
         talksService.call {
             println "calling talk"
@@ -71,7 +71,7 @@ class RestServlet extends HttpServlet {
 
     }
 
-    def getSchedule(resp, params) {
+    def getSchedule = { resp, params ->
 
         userScheduleService.call {
             println "calling userSchedule"
@@ -85,7 +85,7 @@ class RestServlet extends HttpServlet {
 
     }
 
-    def createUser(resp, params) {
+    def createUser = { resp, params ->
 
         userScheduleService.call {
             println "calling userSchedule"
@@ -101,7 +101,7 @@ class RestServlet extends HttpServlet {
 
     }
 
-    def addTalkToUserSchedule(resp, params) {
+    def addTalkToUserSchedule = { resp, params ->
 
         userScheduleService.call {
             LinkableResource user = it.addTalkToUserSchedule(params['userId'], params['talkId'])
@@ -117,7 +117,7 @@ class RestServlet extends HttpServlet {
 
     }
 
-    def removeTalkToUserSchedule(resp, params) {
+    def removeTalkToUserSchedule = { resp, params ->
 
         userScheduleService.call {
             LinkableResource user = it.removeTalkToUserSchedule(params['userId'], params['talkId'])
