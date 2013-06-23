@@ -1,4 +1,5 @@
 package com.gamasoft.osgi.frontend.servlets
+
 import com.gamasoft.osgi.frontend.route.RestRoutes
 import com.gamasoft.osgi.frontend.tracker.ServiceProxy
 import com.gamasoft.osgi.interfaces.frontend.LinkableResource
@@ -78,9 +79,12 @@ class RestServlet extends HttpServlet {
 
             def user = it.getUserSchedule(params['userId'])
 
-            talksService.call {
-                renderResource(it.getUserSchedule(user), resp)
-            }.orElse { noService(resp) }
+            if (user == null)
+                resp.sendError(404, "Resource not available")
+            else
+                talksService.call {
+                    renderResource(it.getUserSchedule(user), resp)
+                }.orElse { noService(resp) }
         }.orElse { noService(resp) }
 
     }

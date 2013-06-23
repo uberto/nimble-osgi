@@ -1,5 +1,4 @@
 package com.gamasoft.osgi.domain.users
-
 import com.gamasoft.osgi.domain.talks.Talk
 import spock.lang.Specification
 
@@ -20,7 +19,7 @@ class DecoratedUserFactoryTest extends Specification {
         def userPref = new UserSchedule(['notExisting', 'interested'] as SortedSet)
         def user = new User('user', 'userName', 'user@email.com', userPref)
 
-        def DecoratedUser decoratedUser = factory.create(user)
+        def decoratedUser = factory.create(user)
         expect:
         decoratedUser.userName == 'userName'
         decoratedUser.resourceName == 'user'

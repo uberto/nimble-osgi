@@ -1,5 +1,6 @@
 package com.gamasoft.osgi.domain.users
 import com.gamasoft.osgi.domain.talks.Talk
+import com.gamasoft.osgi.interfaces.frontend.LinkableResource
 
 class DecoratedUserFactory {
 
@@ -9,11 +10,12 @@ class DecoratedUserFactory {
         this.talkList = talkList
     }
 
-    DecoratedUser create(User user) {
-        def interestedTalks = user.schedule.interestedTalkIds.collect { talkList.get(it) }.findAll { it != null }
-        return new DecoratedUser(resourceName: user.resourceName,
-                userName:user.userName,
-                email: user.email,
-                interestedTalks: interestedTalks)
+    LinkableResource create(User user) {
+        def myInterestedTalks = user.schedule.interestedTalkIds.collect { talkList.get(it) }.findAll { it != null }
+        new LinkableResource(){
+                String resourceName = user.resourceName
+                String userName = user.userName
+                String email = user.email
+                List<Talk> interestedTalks = myInterestedTalks}
     }
 }

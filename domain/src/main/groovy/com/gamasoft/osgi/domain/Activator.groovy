@@ -1,5 +1,5 @@
 package com.gamasoft.osgi.domain
-
+import com.gamasoft.osgi.domain.services.ServiceMonitor
 import com.gamasoft.osgi.domain.talks.TalksServiceDomain
 import com.gamasoft.osgi.domain.users.UserScheduleServiceDomain
 import com.gamasoft.osgi.interfaces.frontend.TalksService
@@ -11,7 +11,7 @@ import org.osgi.util.tracker.ServiceTracker
 
 public class Activator implements BundleActivator {
 
-    private ServiceTracker myTracker
+    private ServiceTracker serviceTracker
 
     public void start(BundleContext context) {
 
@@ -20,17 +20,17 @@ public class Activator implements BundleActivator {
         context.registerService(UserScheduleService.class.getName(),
                 new UserScheduleServiceDomain(), null);
 
-        myTracker = new ServiceTracker(context, PersistenceService.class.getName(), null)
+        serviceTracker = new ServiceTracker(context, PersistenceService.class.getName(), new ServiceMonitor())
 
         context.registerService TalksService.class.getName(),
-                new TalksServiceDomain(myTracker), null;
+                new TalksServiceDomain(serviceTracker), null;
 
 
 
     }
 
     public void stop(BundleContext context) {
-        myTracker?.close()
+        serviceTracker?.close()
         println "Bye from Domain bundle activator ${this.class.name}"
     }
 
