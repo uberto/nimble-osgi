@@ -10,22 +10,22 @@ http://groovy.codehaus.org/Download
 Download karaf 3.0.0-RC1
 http://karaf.apache.org/index/community/download.html
 
-launch it:
+unzip in a dir and launch it:
 bin/karaf
 
 
-
-Install http support (pax-web)
-
-feature:install http
-
-to start and configure jetty (just once)
-config:property-set -p org.ops4j.pax.web org.osgi.service.http.port 8080
-
-(check on localhost:8080)
-
+From Karaf console type these 3 commands:
 
 install -s mvn:org.codehaus.groovy/groovy-all
+feature:install http
+config:property-set -p org.ops4j.pax.web org.osgi.service.http.port 8080
+
+These are to install groovy bundle, http support (pax-web) and to configure jetty
+
+At this point it should show a jetty 404 page on localhost:8080
+
+
+
 
 Download (or clone) example code from github
 https://github.com/uberto/nimble-osgi
