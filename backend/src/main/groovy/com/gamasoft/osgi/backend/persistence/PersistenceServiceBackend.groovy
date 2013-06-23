@@ -5,10 +5,10 @@ import com.gamasoft.osgi.interfaces.persistence.PersistenceService
 
 class PersistenceServiceBackend implements PersistenceService {
     @Override
-    def InputStream loadTracks() {
+    def InputStream loadTalks() {
 
-        println "loadTracks: sending stream"
-        println "data " +  getClass().getResourceAsStream("/talks.xml").text
+        println "loadTalks: sending stream"
+//        println "data " +  getClass().getResourceAsStream("/talks.xml").text
 
         getClass().getResourceAsStream("/talks.xml")
 

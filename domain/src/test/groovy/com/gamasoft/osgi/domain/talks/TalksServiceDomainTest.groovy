@@ -42,7 +42,7 @@ class TalksServiceDomainTest extends Specification {
 
     def "retrieve all the tracks"() {
       setup:
-        backendService.loadTracks() >> new ByteArrayInputStream(TALKS_XML.bytes)
+        backendService.loadTalks() >> new ByteArrayInputStream(TALKS_XML.bytes)
         def talks = service.getTalks()
         expect:
         talks.size() == 2
@@ -51,7 +51,7 @@ class TalksServiceDomainTest extends Specification {
     def "retrieve a single track"() {
 
         setup:
-        backendService.loadTracks() >> new ByteArrayInputStream(TALKS_XML.bytes)
+        backendService.loadTalks() >> new ByteArrayInputStream(TALKS_XML.bytes)
         def talk = service.getTalkDetails(talkId)
         expect:
         talk.title == title

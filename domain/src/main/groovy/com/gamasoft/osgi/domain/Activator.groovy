@@ -1,5 +1,5 @@
 package com.gamasoft.osgi.domain
-import com.gamasoft.osgi.domain.services.ServiceMonitor
+
 import com.gamasoft.osgi.domain.talks.TalksServiceDomain
 import com.gamasoft.osgi.domain.users.UserScheduleServiceDomain
 import com.gamasoft.osgi.interfaces.frontend.TalksService
@@ -20,12 +20,12 @@ public class Activator implements BundleActivator {
         context.registerService(UserScheduleService.class.getName(),
                 new UserScheduleServiceDomain(), null);
 
-        serviceTracker = new ServiceTracker(context, PersistenceService.class.getName(), new ServiceMonitor())
+        serviceTracker = new ServiceTracker(context, PersistenceService.class.getName(), null)
+
+        serviceTracker.open()
 
         context.registerService TalksService.class.getName(),
                 new TalksServiceDomain({serviceTracker.getService() as PersistenceService}), null;
-
-
 
     }
 

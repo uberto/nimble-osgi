@@ -1,19 +1,18 @@
 package com.gamasoft.osgi.domain.talks
+
 import com.gamasoft.osgi.domain.users.DecoratedUserFactory
 import com.gamasoft.osgi.domain.users.User
 import com.gamasoft.osgi.interfaces.frontend.LinkableResource
 import com.gamasoft.osgi.interfaces.frontend.TalksService
 import com.gamasoft.osgi.interfaces.persistence.PersistenceService
+import groovy.util.slurpersupport.GPathResult
 
 class TalksServiceDomain implements TalksService {
 
-    def Map<String, Talk> talks = null
-    def DecoratedUserFactory decoratedUserFactory
     private Closure<PersistenceService> serviceClosure
 
     TalksServiceDomain(Closure<PersistenceService> closure) {
         this.serviceClosure = closure
-        this.decoratedUserFactory = new DecoratedUserFactory(talks)
     }
 
 
@@ -21,40 +20,34 @@ class TalksServiceDomain implements TalksService {
     @Override
     List<Talk> getTalks() {
 
-        initTalks()
-
-        println "sending $talks"
-
-        new ArrayList<>(talks.values())
+        new ArrayList<>(retrieveTalksMap().values())
     }
 
-    private initTalks() {
-        if (talks == null || talks.isEmpty()) {
-            def backendService = serviceClosure()
-            if (backendService == null)  {
-                println "no backend service "
+    private Map<String, Talk> retrieveTalksMap() {
+        def backendService = serviceClosure()
+        if (backendService == null) {
+            println "no backend service "
 
-                talks = [:]
-            }
-            else {
-                def tracks = backendService.loadTracks()
-                println "loaded tracks " + tracks.available()
+            return [:]
+        } else {
+            def talksStream = backendService.loadTalks()
+            println "loaded talksStream " + talksStream.available()
 
-                talks = parseTracks(tracks)
-            }
+            return parseTalksXml(talksStream)
         }
     }
 
-    static Map<String, Talk> parseTracks(InputStream inputStream) {
+
+    static Map<String, Talk> parseTalksXml(InputStream inputStream) {
         println "parsing tracks"
         def talkMap = [:]
         if (inputStream == null)
             return talkMap
         def xml = new XmlSlurper().parse(inputStream)
 
-        xml.talk.each{
+        xml.talk.each {
             Speaker speaker = new Speaker(resourceName: it.speaker.resourceName, name: it.speaker.name, surname: it.speaker.surname, bio: it.speaker.bio)
-            Talk talk = new Talk(resourceName:  it.resourceName, title: it.title, speaker: speaker)
+            Talk talk = new Talk(resourceName: it.resourceName, title: it.title, durationInMin: parseInt(it.durationInMin, 0), talkAbstract: it.talkAbstract, speaker: speaker)
             talkMap.put(talk.resourceName, talk)
 
         }
@@ -62,15 +55,22 @@ class TalksServiceDomain implements TalksService {
         talkMap;
     }
 
+    static int parseInt(GPathResult node, int defaultValue) {
+        if (node == null || node.text().isEmpty())
+            return defaultValue
+        else
+            return Integer.parseInt(node.text());
+    }
 
     @Override
     Talk getTalkDetails(String talkId) {
-        initTalks()
-        talks[talkId]
+        retrieveTalksMap()[talkId]
     }
 
     @Override
     LinkableResource getUserSchedule(LinkableResource user) {
-        return decoratedUserFactory.create(user as User)
+
+        return DecoratedUserFactory.create(retrieveTalksMap(), user as User)
     }
+
 }

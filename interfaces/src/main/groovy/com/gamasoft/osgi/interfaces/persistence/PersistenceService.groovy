@@ -2,5 +2,5 @@ package com.gamasoft.osgi.interfaces.persistence
 
 
 interface PersistenceService {
-    def InputStream loadTracks()
+    def InputStream loadTalks()
 }

@@ -8,10 +8,14 @@
             <surname>Smith</surname>
             <bio>programmer</bio>
         </speaker>
+        <talkAbstract>bla bla bla</talkAbstract>
+        <durationInMin>60</durationInMin>
     </talk>
     <talk>
         <resourceName>groovy</resourceName>
         <title>groovy rulez!!!</title>
+        <talkAbstract>bla bla bla</talkAbstract>
+        <durationInMin>45</durationInMin>
         <speaker>
             <resourceName>frankb</resourceName>
             <name>Frank</name>
@@ -22,6 +26,8 @@
     <talk>
         <resourceName>karaf</resourceName>
         <title>how karaf saved our day</title>
+        <talkAbstract>bla bla bla</talkAbstract>
+        <durationInMin>120</durationInMin>
         <speaker>
             <resourceName>jonc</resourceName>
             <name>Jon</name>
@@ -32,11 +38,25 @@
     <talk>
         <resourceName>tdd</resourceName>
         <title>tdd is forever</title>
+        <talkAbstract>bla bla bla</talkAbstract>
+        <durationInMin>60</durationInMin>
         <speaker>
             <resourceName>matteov</resourceName>
             <name>Matteo</name>
             <surname>Vaccari</surname>
             <bio>agile coach</bio>
+        </speaker>
+    </talk>
+    <talk>
+        <resourceName>gradle</resourceName>
+        <title>the holy gradle</title>
+        <talkAbstract>bla bla bla</talkAbstract>
+        <durationInMin>15</durationInMin>
+        <speaker>
+            <resourceName>tonyc</resourceName>
+            <name>Antony</name>
+            <surname>Clark</surname>
+            <bio>devop</bio>
         </speaker>
     </talk>
 
