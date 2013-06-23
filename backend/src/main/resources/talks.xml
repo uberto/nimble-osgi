@@ -1,0 +1,43 @@
+<talks>
+    <talk>
+        <resourceName>osgi</resourceName>
+        <title>osgi is the best</title>
+        <speaker>
+            <resourceName>andys</resourceName>
+            <name>Andy</name>
+            <surname>Smith</surname>
+            <bio>programmer</bio>
+        </speaker>
+    </talk>
+    <talk>
+        <resourceName>groovy</resourceName>
+        <title>groovy rulez!!!</title>
+        <speaker>
+            <resourceName>frankb</resourceName>
+            <name>Frank</name>
+            <surname>Beniek</surname>
+            <bio>scrum master</bio>
+        </speaker>
+    </talk>
+    <talk>
+        <resourceName>karaf</resourceName>
+        <title>how karaf saved our day</title>
+        <speaker>
+            <resourceName>jonc</resourceName>
+            <name>Jon</name>
+            <surname>Cooper</surname>
+            <bio>team leader</bio>
+        </speaker>
+    </talk>
+    <talk>
+        <resourceName>tdd</resourceName>
+        <title>tdd is forever</title>
+        <speaker>
+            <resourceName>matteov</resourceName>
+            <name>Matteo</name>
+            <surname>Vaccari</surname>
+            <bio>agile coach</bio>
+        </speaker>
+    </talk>
+
+</talks>
