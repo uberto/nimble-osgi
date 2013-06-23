@@ -23,7 +23,7 @@ public class Activator implements BundleActivator {
         serviceTracker = new ServiceTracker(context, PersistenceService.class.getName(), new ServiceMonitor())
 
         context.registerService TalksService.class.getName(),
-                new TalksServiceDomain(serviceTracker), null;
+                new TalksServiceDomain({serviceTracker.getService() as PersistenceService}), null;
 
 
 

@@ -29,16 +29,24 @@ class TalksServiceDomain implements TalksService {
     }
 
     private initTalks() {
-        if (talks == null) {
+        if (talks == null || talks.isEmpty()) {
             def backendService = serviceClosure()
-            if (backendService == null)
+            if (backendService == null)  {
+                println "no backend service "
+
                 talks = [:]
-            else
-                talks = parseTracks(backendService.loadTracks())
+            }
+            else {
+                def tracks = backendService.loadTracks()
+                println "loaded tracks " + tracks.available()
+
+                talks = parseTracks(tracks)
+            }
         }
     }
 
     static Map<String, Talk> parseTracks(InputStream inputStream) {
+        println "parsing tracks"
         def talkMap = [:]
         if (inputStream == null)
             return talkMap
