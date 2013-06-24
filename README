@@ -1,6 +1,6 @@
 Nimble Osgi
 
-an workshop for SPA conference 2013 - London
+a workshop for SPA conference 2013 - London
 
 The project is a simple example of a Rest-Api backend to serve a hypothetical conference.
 On top of serving the list of talks, the api allows for users to register and define their own favorite talks list (schedule).
