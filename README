@@ -1,3 +1,23 @@
+Nimble Osgi
+
+an workshop for SPA conference 2013 - London
+
+The project is a simple example of a Rest-Api backend to serve a hypothetical conference.
+On top of serving the list of talks, the api allows for users to register and define their own favorite talks list (schedule).
+
+GET           /conferenceName/talks                  <= list of all talks
+GET           /conferenceName/talk/talkId            <= detail of a single talk
+POST          /conferenceName/schedule/              <= create user, redirect on userId/talks
+PUT/DELETE    /conferenceName/schedule/userId/talkId      <= add/delete a talk to the user schedule
+GET           /conferenceName/schedule/userId/talks       <= details of user and his schedule
+
+
+
+
+
+
+
+
 Setup instructions
 -----
 
@@ -35,13 +55,24 @@ to compile from command line (in the main dir)
 ./gradlew build install
 
 
-from karaf console
+to install bundles in karaf, from karaf console
 install -s mvn:com.gama-soft.osgi/frontend/1.0.0-SNAPSHOT
 install -s mvn:com.gama-soft.osgi/backend/1.0.0-SNAPSHOT
 install -s mvn:com.gama-soft.osgi/domain/1.0.0-SNAPSHOT
 install -s mvn:com.gama-soft.osgi/interfaces/1.0.0-SNAPSHOT
 
-(check on localhost:8080/conference)
+them, always from karaf console
+list
+
+should return all 4 bundles as active with their bundleId
+
+
+
+At this point everything should work and (for example)
+localhost:8080/conference/talks
+
+Should return a list of talks
+You can verify PUT/POST/DELETE calls with curl from command line or a browser plugin like Postman for Chrome
 
 
 
@@ -54,6 +85,17 @@ to compile and install only a module (from the module dir)
 ../gradlew install
 
 
+
+------
+Exercises:
+
+1) Cache. Currently there talks are always retrieve from the backend, if backend bundle goes down list of talk doesn't work.
+Since the list of talks are not supposed to change often, we can add a cache in the domain module.
+
+2) Rooms. Currently there is no indication of room in the talks, add a room field in the talks, and a api to list only talks of a room.
+/conference/talks/room/roomId
+
+3) Logs. There are several "println" lines around the code, we can create a new bundle logging with a service for log and use it instead.
 
 
 

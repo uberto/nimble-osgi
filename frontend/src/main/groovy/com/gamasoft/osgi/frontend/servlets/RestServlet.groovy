@@ -16,12 +16,6 @@ import static com.gamasoft.osgi.frontend.route.RestMethod.*
 
 class RestServlet extends HttpServlet {
 
-//        /conferenceName/talks
-//        /conferenceName/talk/talkName
-//        /conferenceName/schedule/yourName      <= POST/PUT/DELETE
-//        /conferenceName/schedule/yourName/talks
-
-//
     private final ServiceProxy<TalksService> talksService
     private final ServiceProxy<UserScheduleService> userScheduleService
     private final RestRoutes routes = new RestRoutes()
@@ -30,6 +24,7 @@ class RestServlet extends HttpServlet {
         this.userScheduleService = userScheduleService
         this.talksService = talksService
 
+        //route registration, the first match with req URI will be served, so order matters
 
         routes << [GET, '/conference/talks', getTalks]
         routes << [GET, '/conference/talk/$talkId', getTalk]
