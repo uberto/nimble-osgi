@@ -89,7 +89,13 @@ class RestServlet extends HttpServlet {
         userScheduleService.call {
             println "calling userSchedule"
 
-            def user = it.createUserPreferences(params['userName'][0], params['email'][0])
+            def userName = params['userName']
+            def email = params['email']
+            if (userName == null || email == null){
+                resp.sendError 400 "Invalid data: userName and email params expected!"
+                return
+            }
+            def user = it.createUserPreferences(userName[0], email[0])
 
             println "created user $user"
 

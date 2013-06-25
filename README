@@ -87,6 +87,26 @@ to compile and install only a module (from the module dir)
 
 
 ------
+Rest calls examples:
+
+
+curl http://localhost:8080/conference/talks
+
+curl http://localhost:8080/conference/talk/<talkId>
+
+curl --data "userName=uberto&email=uberto@mymail.com" http://localhost:8080/conference/schedule/ -L
+
+curl PUT http://localhost:8080/conference/schedule/<userId>
+
+curl http://localhost:8080/conference/schedule/<userId>/talks
+
+curl -X PUT http://localhost:8080/conference/schedule/<userId>/<talkId>
+
+curl -X DELETE http://localhost:8080/conference/schedule/<userId>/<talkId>
+
+
+
+------
 Exercises:
 
 1) Cache. Currently there talks are always retrieve from the backend, if backend bundle goes down list of talk doesn't work.

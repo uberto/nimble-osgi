@@ -12,6 +12,16 @@ class DecoratedUserFactory {
             String userName = user.userName
             String email = user.email
             List<Talk> interestedTalks = myInterestedTalks
+
+            @Override
+            public java.lang.String toString() {
+                return "DecoratedUser{" +
+                        "resourceName='" + this.resourceName + '\'' +
+                        ", userName='" + this.userName + '\'' +
+                        ", email='" + this.email + '\'' +
+                        ", interestedTalks=" + this.interestedTalks +
+                        '}';
+            }
         }
     }
 }
