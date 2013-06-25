@@ -7,11 +7,11 @@ class PersistenceServiceBackend implements PersistenceService {
     @Override
     def InputStream loadTalks() {
 
-        println "loadTalks: sending stream"
-//        println "data " +  getClass().getResourceAsStream("/talks.xml").text
+        def fileName = "/talks.xml"
 
-        getClass().getResourceAsStream("/talks.xml")
+        println "loadTalks: sending stream from ${fileName}"
 
+        getClass().getResourceAsStream(fileName)
 
     }
 }

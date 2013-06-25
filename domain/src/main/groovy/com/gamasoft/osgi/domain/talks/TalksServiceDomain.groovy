@@ -27,14 +27,14 @@ class TalksServiceDomain implements TalksService {
         def backendService = serviceClosure()
         if (backendService == null) {
             println "no backend service "
-
             return [:]
-        } else {
-            def talksStream = backendService.loadTalks()
-            println "loaded talksStream " + talksStream.available()
-
-            return parseTalksXml(talksStream)
         }
+
+        def talksStream = backendService.loadTalks()
+        println "loaded talksStream " + talksStream.available()
+
+        return parseTalksXml(talksStream)
+
     }
 
 
@@ -52,7 +52,7 @@ class TalksServiceDomain implements TalksService {
 
         }
 
-        talkMap;
+        talkMap
     }
 
     static int parseInt(GPathResult node, int defaultValue) {

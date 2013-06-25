@@ -17,16 +17,20 @@ public class Activator implements BundleActivator {
 
         println "Hello from Domain bundle activator ${this.class.name}"
 
-        context.registerService(UserScheduleService.class.getName(),
-                new UserScheduleServiceDomain(), null);
+        context.registerService UserScheduleService.class.getName(),
+                new UserScheduleServiceDomain(), null
 
         serviceTracker = new ServiceTracker(context, PersistenceService.class.getName(), null)
 
         serviceTracker.open()
 
         context.registerService TalksService.class.getName(),
-                new TalksServiceDomain({serviceTracker.getService() as PersistenceService}), null;
+                createServiceDomain(serviceTracker), null
 
+    }
+
+    private TalksServiceDomain createServiceDomain(serviceTracker) {
+        new TalksServiceDomain({ serviceTracker.getService() as PersistenceService })
     }
 
     public void stop(BundleContext context) {

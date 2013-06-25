@@ -1,7 +1,5 @@
 package com.gamasoft.osgi.backend
-
 import com.gamasoft.osgi.backend.persistence.PersistenceServiceBackend
-import com.gamasoft.osgi.interfaces.frontend.TalksService
 import com.gamasoft.osgi.interfaces.persistence.PersistenceService
 import org.osgi.framework.BundleActivator
 import org.osgi.framework.BundleContext
@@ -17,8 +15,8 @@ public class Activator implements BundleActivator {
     }
 
     public void stop(BundleContext context) {
-        println "Bye from Backend bundle activator ${this.class.name}"
 
+        println "Bye from Backend bundle activator ${this.class.name}"
 
     }
 }

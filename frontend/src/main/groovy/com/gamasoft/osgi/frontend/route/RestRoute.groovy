@@ -6,35 +6,41 @@ class RestRoute {
     RestMethod method
     String uri
     Closure call
-    String[] routParts
+    String[] routeParts
 
     RestRoute(RestMethod method, String uri, Closure call) {
         this.method = method
         this.uri = uri
         this.call = call
-        this.routParts = uri.split('/')
+        this.routeParts = uri.split('/')
     }
 
     def match(String method, String uri) {
         def noneMatch = [false, [:]]
-        def parts = uri.split('/')
-        if (routParts.length != parts.length)
-            return noneMatch;
         if (method != this.method.name())
             return noneMatch;
 
+        def parts = uri.split('/')
+        if (routeParts.length != parts.length)
+            return noneMatch;
+
         def params = [:]
-        for (int i = 0; i < parts.length; i++) {
-            def routePart = routParts[i]
-            if (routePart.startsWith('$'))
-                params.put(routePart.substring(1), parts[i])
-            else if (parts[i] != routePart)
-                return noneMatch
+
+        def diff = [routeParts, parts].transpose().find {
+            routePart, part ->
+                if (routePart.startsWith('$'))
+                    params.put(routePart.substring(1), part)
+                else if (part != routePart)
+                    return true
         }
+        if (diff)
+            return noneMatch
         return [true, params]
     }
 
+
     def process(Map<String, String> params, HttpServletResponse httpServletResponse) {
+
         call(httpServletResponse, params)
 
     }

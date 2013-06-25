@@ -14,10 +14,19 @@ class UserScheduleServiceDomain implements UserScheduleService {
 
     @Override
     LinkableResource createUserPreferences(String userName, String email) {
-        def emptySchedule = new UserSchedule(interestedTalkIds: [] as SortedSet)
-        def user = new User(userName: userName, resourceName: userName + rand.nextInt(100), email: email, schedule: emptySchedule)
-        users.put(user.resourceName, user)
+        def user = new User(userName: userName, resourceName: userName + rand.nextInt(100), email: email, schedule: createNewEmptySchedule())
+
+        storeUser(user)
+
         return user
+    }
+
+    private void storeUser(User user) {
+        users.put(user.resourceName, user)
+    }
+
+    private UserSchedule createNewEmptySchedule() {
+        new UserSchedule(interestedTalkIds: [] as SortedSet)
     }
 
     @Override
@@ -30,7 +39,8 @@ class UserScheduleServiceDomain implements UserScheduleService {
         def user = users.get(userId)
         if (user == null)
             return null
-        //TODO check if the talkId actually exist
+
+        //TODO should check if the talkId actually exist
         user.schedule.interestedTalkIds.add(talkId)
         return user
     }
