@@ -118,6 +118,36 @@ Since the list of talks are not supposed to change often, we can add a cache in 
 3) Logs. There are several "println" lines around the code, we can create a new bundle logging with a service for log and use it instead.
 
 
+------
+Karaf console cheatsheet:
+
+
+help   <-- all possible commands
+
+list   <-- list of all user bundle (threshold>50)
+list -t 0   <-- list all bundles
+
+start <bundleId>  <-- start a bundle (active)
+stop  <bundleId>  <-- stop a bundle
+install -s mvn:<maven reference>  <-- install and start a bundle
+
+log:set      <-- set log level
+log:display  <-- show log
+log:display-exception   <-- show last exception
+log:tail     <-- tail log
+
+
+bundle:watch <bundleId> <bundleId> ...  <-- watch bundles from maven repo
+
+shutdown       <-- shutdown karaf
+
+All bundle are copied in:
+data/cache/*
+
+
+
+
+
 
 
 

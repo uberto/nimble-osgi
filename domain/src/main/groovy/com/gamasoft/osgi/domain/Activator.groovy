@@ -38,5 +38,4 @@ public class Activator implements BundleActivator {
         println "Bye from Domain bundle activator ${this.class.name}"
     }
 
-
-    }
+}
