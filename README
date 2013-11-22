@@ -23,9 +23,10 @@ Setup instructions
 
 Download and configure Maven 3.x
 
-Download and configure your ide for Groovy 2.x (tested with 2.1.4)
+Download Groovy 2.x (tested with 2.1.4)
 http://groovy.codehaus.org/Download
 
+(optional) configure your ide for Groovy (plugin intellij/eclipse)
 
 Download karaf 3.0.0-RC1
 http://karaf.apache.org/index/community/download.html
@@ -40,9 +41,9 @@ install -s mvn:org.codehaus.groovy/groovy-all
 feature:install http
 config:property-set -p org.ops4j.pax.web org.osgi.service.http.port 8080
 
-These are to install groovy bundle, http support (pax-web) and to configure jetty
+We just installed groovy bundle, installed http support (pax-web) feature and configured jetty port (httpserver)
 
-At this point it should show a jetty 404 page on localhost:8080
+At this point it should show a jetty 404 page on localhost:8080 with a small "Powered by Jetty://" at the bottom.
 
 
 
@@ -50,21 +51,35 @@ At this point it should show a jetty 404 page on localhost:8080
 Download (or clone) example code from github
 https://github.com/uberto/nimble-osgi
 
+Check execution permission:
+chmod a+x gradlew
+
+(optional) to generate IntelliJ project
+./gradlew idea
+or Eclipse project
+./gradlew eclipse
 
 to compile from command line (in the main dir)
 ./gradlew build install
 
 
 to install bundles in karaf, from karaf console
+install -s mvn:com.gama-soft.osgi/interfaces/1.0.0-SNAPSHOT
+install -s mvn:com.gama-soft.osgi/domain/1.0.0-SNAPSHOT
 install -s mvn:com.gama-soft.osgi/frontend/1.0.0-SNAPSHOT
 install -s mvn:com.gama-soft.osgi/backend/1.0.0-SNAPSHOT
-install -s mvn:com.gama-soft.osgi/domain/1.0.0-SNAPSHOT
-install -s mvn:com.gama-soft.osgi/interfaces/1.0.0-SNAPSHOT
 
-them, always from karaf console
+
+then, on karaf console
 list
 
 should return all 4 bundles as active with their bundleId
+
+
+install -s is a shortcut for
+install BUNDLE
+start BUNDLE-ID
+If bundle cannot start, no need to reinstall it, just try to start it again
 
 
 
@@ -78,10 +93,10 @@ You can verify PUT/POST/DELETE calls with curl from command line or a browser pl
 
 to autoupdate bundles
 bundle:watch <bundleId> <bundleId>
-(dev:watch in karaf 2.x)
+(was dev:watch in karaf 2.x)
 
 
-to compile and install only a module (from the module dir)
+to compile and install (in maven) only a module, from the module dir
 ../gradlew install
 
 
@@ -119,6 +134,15 @@ Since the list of talks are not supposed to change often, we can add a cache in 
 
 
 ------
+Gradle cheatsheet:
+
+./gradlew tasks   <-- list of all available tasks
+./gradlew build   <-- build project
+./gradlew install <-- install bundle into maven rep
+./gradlew test    <-- runs all unit tests
+
+
+
 Karaf console cheatsheet:
 
 

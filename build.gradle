@@ -4,6 +4,7 @@ subprojects {
     apply plugin: 'osgi'
     apply plugin: 'maven'
     apply plugin: 'idea'
+    apply plugin: 'eclipse'
 
     targetCompatibility = 1.7
     sourceCompatibility = 1.7
@@ -26,6 +27,10 @@ subprojects {
 //        pom.groupId = 'com.gama-soft'
 //        pom.artifactId = 'osgi.groovy.test'
         }
+    }
+
+    task wrapper(type: Wrapper) {
+        gradleVersion = '1.9'
     }
 
 
